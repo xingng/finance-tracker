@@ -3,3 +3,5 @@ gspread
 authlib
 google-auth
 pandas
+matplotlib
+plotly
