@@ -39,7 +39,9 @@ if not st.session_state.token:
         auth_url = get_authorization_url(pg._url_path)
         st.write("Redirecting...")
         st.markdown(f"""
-            <meta http-equiv="refresh" content="0; url='{auth_url}'" />
+            <script>
+                window.top.location.href = "{auth_url}";
+            </script>
         """, unsafe_allow_html=True)
 else:
     st.success("✅ You are logged in!")
