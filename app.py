@@ -37,14 +37,11 @@ if not st.session_state.token:
         
     else:
         auth_url = get_authorization_url(pg._url_path)
+
+        # st.link_button("Log In", auth_url)
         st.markdown(
             f"""
-            <a href="{auth_url}" id="login_url">Log in</a>
-            <script>
-                document.getElementById("login_url").click();
-
-                console.log("halo")
-            </script>
+            <a href="{auth_url}" id="login_url" target="_self">Log in</a>
             """,
             unsafe_allow_html=True
         )

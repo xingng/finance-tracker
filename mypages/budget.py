@@ -39,9 +39,11 @@ class BudgetPage( PageTemplate ):
                 budget, 
                 left_on = ["Year", "Month", "Category", "Subcategory"],
                 right_on = ["Year", "Month", "Category", "Subcategory"],
+                how="left"
                 )
             
             df = df.rename(columns = {"Amount" : "Budget"})
+            df["Budget"] = df["Budget"].fillna(0)
             df["Budget Remain"] = ( df["Budget"] - df["Cost"] ).round(2)
 
             df["Day"] = 1
