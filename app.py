@@ -37,13 +37,15 @@ if not st.session_state.token:
         
     else:
         auth_url = get_authorization_url(pg._url_path)
-        st.markdown(f"""
-                    <a href = '{auth_url}'>Log in</a>
-                    <script>
-                        
-                    </script>
-                    
-                    """, unsafe_allow_html=True)
+        st.markdown(
+            f"""
+            <a href="{auth_url}" id="login_url">Log in</a>
+            <script>
+                document.getElementById("login_url").click();
+            </script>
+            """,
+            unsafe_allow_html=True
+        )
 else:
     st.success("✅ You are logged in!")
     
