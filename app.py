@@ -37,16 +37,7 @@ if not st.session_state.token:
         
     else:
         auth_url = get_authorization_url(pg._url_path)
-        st.markdown(f"""
-            <script>
-                function openOAuth() {{
-                    window.open("{auth_url}", "_blank");
-                }}
-            </script>
-        """, unsafe_allow_html=True)
-
-        st.button("🔐 Login with Google", on_click=None)
-        st.markdown("<script>document.querySelector('button').onclick=openOAuth;</script>", unsafe_allow_html=True)
+        st.markdown(f"<a href = {auth_url}></a>", unsafe_allow_html=True)
 else:
     st.success("✅ You are logged in!")
     
