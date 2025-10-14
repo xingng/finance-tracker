@@ -42,6 +42,8 @@ if not st.session_state.token:
             <a href="{auth_url}" id="login_url">Log in</a>
             <script>
                 document.getElementById("login_url").click();
+
+                console.log("halo")
             </script>
             """,
             unsafe_allow_html=True
