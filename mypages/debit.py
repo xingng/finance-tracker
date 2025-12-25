@@ -34,15 +34,17 @@ class DebitPage( PageTemplate ):
 
             total_credit = round( credit["Amount"].sum(), 2)
             total_debit = round( debit["Cost"].sum(), 2)
+            total_balance = round(total_credit - total_debit,2)
 
             with col1:
                 st.metric("Total Expenses", total_debit)
 
             with col2:
-                st.metric("Total Balance", round(total_credit - total_debit,2) )
+                st.metric("Total Balance", total_balance )
 
             st.write("### 📈 Expenses Ratio of Category")
             pie_data = debit.groupby(["Category"], as_index=False).agg({"Cost":"sum"})
+            pie_data.loc[ pie_data.shape[0] ] = [ "Cash Saving",  total_balance]
             fig = px.pie(pie_data, values='Cost', names='Category')
             st.plotly_chart(fig)
 
