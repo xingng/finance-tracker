@@ -43,24 +43,19 @@ class BudgetPage( PageTemplate ):
             filter_condition = " ( Date >= @self.begin ) and ( Date <= @self.end )"
             budget, credit, debit = self.df["budget"].query(filter_condition), self.df["credit"].query(filter_condition), self.df["debit"].query(filter_condition)
 
-            budget["Year"] = budget["Date"].dt.year
-            budget["Month"] = budget["Date"].dt.month
             budget = budget.drop(columns = ["Date"])
-            budget = budget.groupby(["Year", "Month", "Category", "Subcategory"]).agg( {"Amount": "sum"} )
+            budget = budget.groupby(["Category", "Subcategory"]).agg( {"Amount": "sum"} )
 
-            debit["Year"] = debit["Date"].dt.year
-            debit["Month"] = debit["Date"].dt.month
             debit = debit.drop(columns = ["Date"])
-            debit = debit.groupby(["Year", "Month", "Category", "Subcategory"]).agg( {"Cost": "sum"} )
+            debit = debit.groupby(["Category", "Subcategory"]).agg( {"Cost": "sum"} )
 
             df = debit.merge(
                 budget,
-                left_on = ["Year", "Month", "Category", "Subcategory"],
-                right_on = ["Year", "Month", "Category", "Subcategory"],
+                left_on = ["Category", "Subcategory"],
+                right_on = ["Category", "Subcategory"],
                 how="outer",
                 ).reset_index()
-            
-            print(df)
+
       
             df = df.rename(columns = {"Amount" : "Budget"})
 
@@ -110,7 +105,7 @@ class BudgetPage( PageTemplate ):
             st.plotly_chart(fig)
 
             st.write("### 📄 Budget Remaining")
-            st.dataframe(budget[["Year", "Month", "Category", "Subcategory", "Budget", "Cost","Budget Remain"]])
+            st.dataframe(budget[["Category", "Subcategory", "Budget", "Cost","Budget Remain"]])
 
 
 
